@@ -1,24 +1,25 @@
-# app.py
+from importlib import reload
 
 from flask import Flask, request
-from flask_restx import Api, Resource
-from marshmallow import Schema, fields
+from flask_restx.representations import output_json
+
 from database.database import db
+from api import api
+from movies.views import movies_module
+import sys
 
-app = Flask(__name__)
-app.config.from_pyfile("config.py")
+application = Flask(__name__)
+application.config.from_pyfile("config.py")
 
-api = Api(app)
+api.app = application
+api.init_app(application)
+api.app.config['RESTFUL_JSON'] = {'ensure_ascii': False}
+api.representations = {'application/json; charset=utf-8': output_json}
 
-movies_ns = api.namespace('movies')
-directors_ns = api.namespace('directors')
-genres_ns = api.namespace('genres')
+db.app = application
+db.init_app(application)
 
-# TODO create blue prints (JFF)
-
-
-
-
+application.register_blueprint(movies_module)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
