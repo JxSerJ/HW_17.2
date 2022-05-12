@@ -1,0 +1,6 @@
+SQLALCHEMY_DATABASE_URI = 'sqlite:///database/test.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+JSON_AS_ASCII = False
+JSON_SORT_KEYS = False
+DEBUG = True
