@@ -3,17 +3,16 @@ from importlib import reload
 from flask import Flask, request
 from flask_restx.representations import output_json
 
-from database.database import db
+from database.db import db
 from api import api
 from movies.views import movies_module
-import sys
 
 application = Flask(__name__)
 application.config.from_pyfile("config.py")
 
 api.app = application
 api.init_app(application)
-api.app.config['RESTFUL_JSON'] = {'ensure_ascii': False}
+api.app.config['RESTX_JSON'] = {'ensure_ascii': False, 'indent': 4}
 api.representations = {'application/json; charset=utf-8': output_json}
 
 db.app = application
