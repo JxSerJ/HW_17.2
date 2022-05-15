@@ -120,11 +120,12 @@ class MovieViews(Resource):
         # writing new data
         try:
             with db.session.begin():
-                movie = db.session.query(Movie).get(movie_id)
-
-                for k, v in request_data.items():
-                    setattr(movie, k, v)
-                db.session.add(movie)
+                # movie = db.session.query(Movie).get(movie_id)
+                #
+                # for k, v in request_data.items():
+                #     setattr(movie, k, v)
+                # db.session.add(movie)
+                db.session.query(Movie).filter(Movie.id == movie_id).update(request_data)
                 return f"Data ID: {movie_id} was partially updated.", 200
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
