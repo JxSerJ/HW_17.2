@@ -1,3 +1,5 @@
+from enum import unique
+
 from database.db import db
 
 
@@ -19,10 +21,10 @@ class Movie(db.Model):
 class Director(db.Model):
     __tablename__ = 'director'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), unique=True)
 
 
 class Genre(db.Model):
     __tablename__ = 'genre'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), unique=True)

@@ -14,7 +14,7 @@ class MovieSchema(Schema):
 
 class DirectorSchema(Schema):
     id = fields.Int(dump_only=True)
-    name = fields.Str()
+    name = fields.Str(unique=True)
 
 
 class GenreSchema(Schema):
