@@ -108,11 +108,11 @@ class DirectorViews(Resource):
         # writing new data
         try:
             with db.session.begin():
-                movie = db.session.query(Director).get(director_id)
+                director = db.session.query(Director).get(director_id)
 
                 for k, v in request_data.items():
-                    setattr(movie, k, v)
-                db.session.add(movie)
+                    setattr(director, k, v)
+                db.session.add(director)
                 return f"Data ID: {director_id} was partially updated.", 200
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
