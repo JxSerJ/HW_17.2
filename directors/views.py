@@ -49,25 +49,25 @@ class DirectorsViews(Resource):
             return f"Internal server error. Error: {err}", 500
 
 
-@directors_ns.route('/<int:movie_id>')
+@directors_ns.route('/<int:director_id>')
 class DirectorViews(Resource):
-    def get(self, movie_id: int):
+    def get(self, director_id: int):
         try:
             with db.session.begin():
-                director = db.session.query(Director).get(movie_id)
+                director = db.session.query(Director).get(director_id)
                 if director is None:
-                    return f"Data ID: {movie_id} not found.", 404
+                    return f"Data ID: {director_id} not found.", 404
                 result = director_schema.dump(director)
                 return result
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
 
-    def put(self, movie_id: int):
+    def put(self, director_id: int):
         try:
             with db.session.begin():
-                director = db.session.query(Director).get(movie_id)
+                director = db.session.query(Director).get(director_id)
                 if director is None:
-                    return f"Data ID: {movie_id} not found.", 404
+                    return f"Data ID: {director_id} not found.", 404
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
 
@@ -81,21 +81,21 @@ class DirectorViews(Resource):
         # writing new data
         try:
             with db.session.begin():
-                director = db.session.query(Director).get(movie_id)
+                director = db.session.query(Director).get(director_id)
 
                 for k, v in request_data.items():
                     setattr(director, k, v)
                 db.session.add(director)
-                return f"Data ID: {movie_id} was updated.", 200
+                return f"Data ID: {director_id} was updated.", 200
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
 
-    def patch(self, movie_id: int):
+    def patch(self, director_id: int):
         try:
             with db.session.begin():
-                director = db.session.query(Director).get(movie_id)
+                director = db.session.query(Director).get(director_id)
                 if director is None:
-                    return f"Data ID: {movie_id} not found.", 404
+                    return f"Data ID: {director_id} not found.", 404
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
 
@@ -108,20 +108,20 @@ class DirectorViews(Resource):
         # writing new data
         try:
             with db.session.begin():
-                movie = db.session.query(Director).get(movie_id)
+                movie = db.session.query(Director).get(director_id)
 
                 for k, v in request_data.items():
                     setattr(movie, k, v)
                 db.session.add(movie)
-                return f"Data ID: {movie_id} was partially updated.", 200
+                return f"Data ID: {director_id} was partially updated.", 200
         except Exception as err:
             return f"Internal server error. Error: {err}", 500
 
-    def delete(self, movie_id: int):
+    def delete(self, director_id: int):
         try:
             with db.session.begin():
-                director = db.session.query(Director).get(movie_id)
+                director = db.session.query(Director).get(director_id)
                 db.session.delete(director)
-                return f"Data ID: {movie_id} was deleted successfully.", 200
+                return f"Data ID: {director_id} was deleted successfully.", 200
         except Exception as err:
-            return f"Data ID: {movie_id} not found. Error: {err}", 404
+            return f"Data ID: {director_id} not found. Error: {err}", 404
