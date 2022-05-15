@@ -1,5 +1,3 @@
-from enum import unique
-
 from database.db import db
 
 
